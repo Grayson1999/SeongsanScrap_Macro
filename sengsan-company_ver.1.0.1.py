@@ -69,9 +69,7 @@ for i in range(7,21):
 
 #예약 시간 선택창
 reservationTime = pg.confirm('조회를 누른 뒤 시간 좌표 인식', buttons=buttonList)
-reservationTime2 = pg.confirm('보조 조회할 시간', buttons=buttonList)
 checkNone(reservationTime)
-checkNone(reservationTime2)
 pg.alert(text='안정적인 인식을 위해 확인 버튼을 누른 뒤 창의 위치를 변경하지 마세요', title='준비', button='OK')
 
 #처음 조회 누르기
@@ -86,30 +84,23 @@ while True:
 
 #좌표 인식 변수
 for i in range(7,21):
+    if i <10:
+        i="0"+str(i)
     if reservationTime==str(i)+":00~59"  :
         while True:
             try:
                 x,y = pg.locateCenterOnScreen('./img/'+str(i)+'.png')#이미지 위치
+                locationImg='./img/'+str(i)+'.png'
+                inqX,inqY= pg.locateCenterOnScreen('./img/inquiry.png')
                 break
             except:
                 recognition=pg.confirm('인식할 수 없습니다.','인식 오류', buttons=['다시 인식'])
                 checkNone(recognition)
-    if reservationTime2==str(i)+":00~59"  :
-        while True:
-            try:
-                x2,y2 = pg.locateCenterOnScreen('./img/'+str(i)+'.png')#이미지 위치
-                break
-            except:
-                recognition=pg.confirm('인식할 수 없습니다.','인식 오류', buttons=['다시 인식'])
-                checkNone(recognition)            
 
 #취소시 다시 하기 버튼 예약어로 만들기
 
 
-myTimeList[1]-=1
-if myTimeList[1]<0:
-    myTimeList[0]-=1
-    myTimeList[1]+=60
+
 while True:
     #서버 시간 받아오기
     date = urllib.request.urlopen("https://hpro.hyundai-steel.com/spmainpage.do").headers['Date']
@@ -121,46 +112,20 @@ while True:
     dateListTime[0] +=9
     if dateListTime[0]>=24:
         dateListTime[0]-=9
-
     
     print("running...\n")
 
-    if dateListTime[0] <= myTimeList[0] and dateListTime[1] <= myTimeList[1]:
-        while True: 
-            move_mouse(inqX,inqY)
-            while True:
-                if pg.locateOnScreen('./img/19.png') != None:
-                    break
-            if pg.locateOnScreen("./img/13.png") == None:
+    if dateListTime[0] == myTimeList[0] and dateListTime[1] == myTimeList[1]:
+        move_mouse(inqX,inqY)
+        while True:
+            if pg.locateOnScreen(locationImg) != None:
+                break
+        move_mouse(inqX,inqY)
+        while True:
+            if pg.locateOnScreen(locationImg) != None:
                 break
         move_mouse(x,y)
         pg.press('enter')
-
-        if pg.locateOnScreen('./img/error.png') != None:
-            while True:
-                try:
-                    xc,yc = pg.locateCenterOnScreen('./img/confirm.png')#이미지 위치
-                    break
-                except:
-                    recognition=pg.confirm('인식할 수 없습니다.','인식 오류', buttons=['다시 인식'])
-                    checkNone(recognition)
-            move_mouse(xc,yc)
-            while True: 
-                move_mouse(inqX,inqY)
-                while True:
-                    if pg.locateOnScreen('./img/19.png') != None:
-                        break
-                if pg.locateOnScreen("./img/13.png") == None:
-                    break
-            move_mouse(x2,y2)
-            pg.press('enter')
-            time.sleep(5)
-            pg.alert(text='동작 수행 완료', title='완료 메세지', button='OK')
-            break
-        else:
-            time.sleep(5)
-            pg.alert(text='동작 수행 완료', title='완료 메세지', button='OK')
-            break
-
-       
-        
+        time.sleep(5)
+        pg.alert(text='동작 수행 완료', title='완료 메세지', button='OK')
+        break

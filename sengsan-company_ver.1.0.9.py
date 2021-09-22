@@ -98,7 +98,6 @@ for i in range(7,21):
 
 #취소시 다시 하기 버튼 예약어로 만들기
 
-locationImg='./img/20.png'
 
 
 while True:
@@ -123,7 +122,7 @@ while True:
         while True: 
             move_mouse(inqX,inqY)
             while True:
-                if pg.locateOnScreen(locationImg) != None:
+                if pg.locateOnScreen('./img/20.png') != None:
                     break
             if pg.locateOnScreen("./img/aviliable.png") != None:
                 break
