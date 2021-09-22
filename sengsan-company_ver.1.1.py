@@ -69,9 +69,9 @@ for i in range(7,21):
 
 #예약 시간 선택창
 reservationTime = pg.confirm('조회를 누른 뒤 시간 좌표 인식', buttons=buttonList)
-reservationTime2 = pg.confirm('보조 조회할 시간', buttons=buttonList)
+# reservationTime2 = pg.confirm('보조 조회할 시간', buttons=buttonList)
 checkNone(reservationTime)
-checkNone(reservationTime2)
+# checkNone(reservationTime2)
 pg.alert(text='안정적인 인식을 위해 확인 버튼을 누른 뒤 창의 위치를 변경하지 마세요', title='준비', button='OK')
 
 #처음 조회 누르기
