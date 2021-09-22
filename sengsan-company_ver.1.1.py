@@ -135,32 +135,33 @@ while True:
                 break
         move_mouse(x,y)
         pg.press('enter')
+        break
 
-        if pg.locateOnScreen('./img/error.png') != None:
-            while True:
-                try:
-                    xc,yc = pg.locateCenterOnScreen('./img/confirm.png')#이미지 위치
-                    break
-                except:
-                    recognition=pg.confirm('인식할 수 없습니다.','인식 오류', buttons=['다시 인식'])
-                    checkNone(recognition)
-            move_mouse(xc,yc)
-            while True: 
-                move_mouse(inqX,inqY)
-                while True:
-                    if pg.locateOnScreen('./img/19.png') != None:
-                        break
-                if pg.locateOnScreen("./img/13.png") == None:
-                    break
-            move_mouse(x2,y2)
-            pg.press('enter')
-            time.sleep(5)
-            pg.alert(text='동작 수행 완료', title='완료 메세지', button='OK')
-            break
-        else:
-            time.sleep(5)
-            pg.alert(text='동작 수행 완료', title='완료 메세지', button='OK')
-            break
+        # if pg.locateOnScreen('./img/error.png') != None:
+        #     while True:
+        #         try:
+        #             xc,yc = pg.locateCenterOnScreen('./img/confirm.png')#이미지 위치
+        #             break
+        #         except:
+        #             recognition=pg.confirm('인식할 수 없습니다.','인식 오류', buttons=['다시 인식'])
+        #             checkNone(recognition)
+        #     move_mouse(xc,yc)
+        #     while True: 
+        #         move_mouse(inqX,inqY)
+        #         while True:
+        #             if pg.locateOnScreen('./img/19.png') != None:
+        #                 break
+        #         if pg.locateOnScreen("./img/13.png") == None:
+        #             break
+        #     move_mouse(x2,y2)
+        #     pg.press('enter')
+        #     time.sleep(5)
+        #     pg.alert(text='동작 수행 완료', title='완료 메세지', button='OK')
+        #     break
+        # else:
+        #     time.sleep(5)
+        #     pg.alert(text='동작 수행 완료', title='완료 메세지', button='OK')
+        #     break
 
        
         
