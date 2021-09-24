@@ -2,9 +2,7 @@ import urllib.request
 import urllib.error
 import time
 import pyautogui as pg
-from selenium import webdriver
-from selenium.webdriver.common import keys
-from selenium.webdriver.common.keys import Keys
+
 
 
 #마우스 움직임 후 클릭
@@ -43,21 +41,9 @@ def checkNone(msgReturnValue):
     return msgReturnValue
 
 
-
-
 myTimeList = inputNCheckString(':').split(":")
 myTimeList = changeInt(myTimeList)
 
-# # 드라이버 설정
-# caps = webdriver.DesiredCapabilities.INTERNETEXPLORER
-# caps [ 'ignoreProtectedModeSettings'] = True
-# caps [ 'nativeEvents'] = True
-# caps [ 'ignoreZoomSetting'] = True
-# caps [ 'InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS'] = True
-# caps [ 'requireWindowsFocus'] = True
-# driver = webdriver.Ie (capabilities = caps)
-# # 드라이버를 사용하여 웹 사이트
-# driver.get("http://hpro.hyundai-steel.com/login_scr.jsp")
 
 #버튼 리스트
 buttonList = []
@@ -69,9 +55,7 @@ for i in range(7,21):
 
 #예약 시간 선택창
 reservationTime = pg.confirm('조회를 누른 뒤 시간 좌표 인식', buttons=buttonList)
-# reservationTime2 = pg.confirm('보조 조회할 시간', buttons=buttonList)
 checkNone(reservationTime)
-# checkNone(reservationTime2)
 pg.alert(text='안정적인 인식을 위해 확인 버튼을 누른 뒤 창의 위치를 변경하지 마세요', title='준비', button='OK')
 
 #처음 조회 누르기
@@ -84,24 +68,18 @@ while True:
         recognition=pg.confirm('인식할 수 없습니다.','인식 오류', buttons=['다시 인식'])
         checkNone(recognition)
 
+timeX = 0
+timeY = 0
 #좌표 인식 변수
 for i in range(7,21):
     if reservationTime==str(i)+":00~59"  :
         while True:
             try:
-                x,y = pg.locateCenterOnScreen('./img/'+str(i)+'.png')#이미지 위치
+                timeX,timeY = pg.locateCenterOnScreen('./img/'+str(i)+'.png')#이미지 위치
                 break
             except:
                 recognition=pg.confirm('인식할 수 없습니다.','인식 오류', buttons=['다시 인식'])
-                checkNone(recognition)
-    if reservationTime2==str(i)+":00~59"  :
-        while True:
-            try:
-                x2,y2 = pg.locateCenterOnScreen('./img/'+str(i)+'.png')#이미지 위치
-                break
-            except:
-                recognition=pg.confirm('인식할 수 없습니다.','인식 오류', buttons=['다시 인식'])
-                checkNone(recognition)            
+                checkNone(recognition)           
 
 #취소시 다시 하기 버튼 예약어로 만들기
 
@@ -110,6 +88,7 @@ myTimeList[1]-=1
 if myTimeList[1]<0:
     myTimeList[0]-=1
     myTimeList[1]+=60
+    
 while True:
     #서버 시간 받아오기
     date = urllib.request.urlopen("https://hpro.hyundai-steel.com/spmainpage.do").headers['Date']
@@ -125,7 +104,7 @@ while True:
     
     print("running...\n")
 
-    if dateListTime[0] <= myTimeList[0] and dateListTime[1] <= myTimeList[1]:
+    if dateListTime[0] >= myTimeList[0] and dateListTime[1] >= myTimeList[1]:
         while True: 
             move_mouse(inqX,inqY)
             while True:
@@ -133,35 +112,11 @@ while True:
                     break
             if pg.locateOnScreen("./img/13.png") == None:
                 break
-        move_mouse(x,y)
+        move_mouse(timeX,timeY)
         pg.press('enter')
+        time.sleep(5)
+        pg.alert(text='동작 수행 완료', title='완료 메세지', button='OK')
         break
-
-        # if pg.locateOnScreen('./img/error.png') != None:
-        #     while True:
-        #         try:
-        #             xc,yc = pg.locateCenterOnScreen('./img/confirm.png')#이미지 위치
-        #             break
-        #         except:
-        #             recognition=pg.confirm('인식할 수 없습니다.','인식 오류', buttons=['다시 인식'])
-        #             checkNone(recognition)
-        #     move_mouse(xc,yc)
-        #     while True: 
-        #         move_mouse(inqX,inqY)
-        #         while True:
-        #             if pg.locateOnScreen('./img/19.png') != None:
-        #                 break
-        #         if pg.locateOnScreen("./img/13.png") == None:
-        #             break
-        #     move_mouse(x2,y2)
-        #     pg.press('enter')
-        #     time.sleep(5)
-        #     pg.alert(text='동작 수행 완료', title='완료 메세지', button='OK')
-        #     break
-        # else:
-        #     time.sleep(5)
-        #     pg.alert(text='동작 수행 완료', title='완료 메세지', button='OK')
-        #     break
 
        
         
