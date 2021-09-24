@@ -45,14 +45,14 @@ for i in range(5,21):
 
 pg.screenshot('./img/inquiry.png', region=(inquirySplit[0], inquirySplit[1], inquirySplit[2], inquirySplit[3]))
 
-while True:
-    try:
-        x,y = pg.locateCenterOnScreen('./img/20.png')#이미지 위치
-        break
-    except:
-        recognition=pg.confirm('인식할 수 없습니다.','인식 오류', buttons=['다시 인식'])
-        checkNone(recognition)
-move_mouse(x,y)
+# while True:
+#     try:
+#         x,y = pg.locateCenterOnScreen('./img/20.png')#이미지 위치
+#         break
+#     except:
+#         recognition=pg.confirm('인식할 수 없습니다.','인식 오류', buttons=['다시 인식'])
+#         checkNone(recognition)
+# move_mouse(x,y)
 
 # errorInput =pg.prompt(text="오류 좌표 입력",title="오류 인식 데이터",default="x1 y1 x2 y2)")
 # errorSplit = errorInput.split(" ")
