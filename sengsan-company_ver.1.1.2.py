@@ -9,24 +9,6 @@ def move_mouse(x,y):
     a=pg.moveTo(x,y,0.15)
     pg.click(a)
 
-#"변수"가 포함되어 있는 지 확인
-def inputNCheckString(delimiter):
-    while True:
-        try:
-            myTime = pg.prompt(text="시간 입력",title="시간 입력 창",default="14:00")
-            j=0
-            for i in myTime:
-                if i == delimiter:
-                    j+=1
-            if j == 1:
-                break
-            else:
-                pg.alert(text=':(콜론) 비 포함 오류', title='":"(콜론)을 포함해 입력하세요', button='다시 입력 ')
-        except(TypeError):
-            pg.alert(text='다시 실행 필요', title='입력 받은 값이 없습니다.', button='종료')
-            exit()
-    return myTime
-
 #myTimeList 변수 int로 변환
 def changeInt(list):
     for i in range(len(list)):
@@ -39,9 +21,17 @@ def checkNone(msgReturnValue):
         exit()
     return msgReturnValue
 
+#분 입력
+while True:
+    try:
+        myTime = pg.prompt(text="시간 입력",title="시간 입력 창",default="00")
+        break
+    except(TypeError):
+        pg.alert(text='다시 실행 필요', title='입력 받은 값이 없습니다.', button='종료')
+        exit()
 
-myTimeList = inputNCheckString(':').split(":")
-myTimeList = changeInt(myTimeList)
+#입력한 분 int형 변환
+myTime = int(myTime)
 
 
 #버튼 리스트 생성
@@ -56,6 +46,10 @@ for i in range(7,21):
 reservationTime = pg.confirm('조회를 누른 뒤 시간 좌표 인식', buttons=buttonList)
 checkNone(reservationTime)
 pg.alert(text='안정적인 인식을 위해 확인 버튼을 누른 뒤 창의 위치를 변경하지 마세요', title='준비', button='OK')
+
+#이미지를 인식할 창의 좌표 입력
+browserLocation = pg.prompt(text="창 좌표 입력",title="좌표 입력 창",default="x,y,w,h")
+blList = browserLocation.split(",")
 
 #처음 조회 누르기
 while True:
@@ -85,30 +79,25 @@ for i in range(7,21):
     
 while True:
     #서버 시간 받아오기
-    date = urllib.request.urlopen("https://hpro.hyundai-steel.com/spmainpage.do").headers['Date']
+    date = urllib.request.urlopen("http://hpro.hyundai-steel.com/indexWebkit.jsp?rpage=/spIndex.do").headers['Date']
     dateList = date.split(" ")
     dateListTime = dateList[4].split(":")#['00','00','00']
-    dateListTime = changeInt(dateListTime)
+    dateTime = int(dateListTime[1])
 
-    #GMT+9
-    dateListTime[0] +=9
-    if dateListTime[0]>=24:
-        dateListTime[0]-=9
-
-    
     print("running...\n")
 
-    if dateListTime[0] >= myTimeList[0] and dateListTime[1] >= myTimeList[1]:
+    if dateTime == myTime :
+        print("-------Start--------")
         while True: 
             move_mouse(inqX,inqY)
             while True:
-                if pg.locateOnScreen('./img/19.png') != None or pg.locateOnScreen('./img/9.png') != None:
+                if pg.locateOnScreen('./img/19.png', region=(blList[0],blList[1],blList[2],blList[3])) != None or pg.locateOnScreen('./img/9.png',region=(blList[0],blList[1],blList[2],blList[3])) != None:
                     break
-            if pg.locateOnScreen("./img/13.png") == None:
+            if pg.locateOnScreen("./img/13.png",region=(blList[0],blList[1],blList[2],blList[3])) == None:
                 break
         move_mouse(timeX,timeY)
         pg.press('enter')
-        time.sleep(5)
+        time.sleep(6)
         pg.alert(text='동작 수행 완료', title='완료 메세지', button='OK')
         break
 
