@@ -50,6 +50,7 @@ pg.alert(text='안정적인 인식을 위해 확인 버튼을 누른 뒤 창의 
 #이미지를 인식할 창의 좌표 입력
 browserLocation = pg.prompt(text="창 좌표 입력",title="좌표 입력 창",default="x,y,w,h")
 blList = browserLocation.split(",")
+blList = changeInt(blList)
 
 #처음 조회 누르기
 while True:
@@ -84,7 +85,7 @@ while True:
     dateListTime = dateList[4].split(":")#['00','00','00']
     dateTime = int(dateListTime[1])
 
-    print("running...\n")
+    print("running..."+str(timeX)+str(timeY))
 
     if dateTime == myTime :
         print("-------Start--------")
