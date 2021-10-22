@@ -37,9 +37,7 @@ myTime = int(myTime)
 #버튼 리스트 생성
 buttonList = []
 for i in range(7,21):
-    if i <10:
-        i="0"+str(i)
-    buttonList.append(str(i)+":00~59")
+    buttonList.append(str(i))
     
 
 #예약 시간 선택창
@@ -62,22 +60,21 @@ while True:
         recognition=pg.confirm('인식할 수 없습니다.','인식 오류', buttons=['다시 인식'])
         checkNone(recognition)
 
-timeX = 0
-timeY = 0
+
 #좌표 인식 변수
-for i in range(7,21):
-    if reservationTime==str(i)+":00~59"  :
-        while True:
-            try:
-                timeX,timeY = pg.locateCenterOnScreen('./img/'+str(i)+'.png')#이미지 위치
-                break
-            except:
-                recognition=pg.confirm('인식할 수 없습니다.','인식 오류', buttons=['다시 인식'])
-                checkNone(recognition)           
+# for i in range(7,21):
+#     if reservationTime==str(i)+":00~59"  :
+#         try:
+#             timeX,timeY = pg.locateCenterOnScreen('./img/'+str(i)+'.png', region=(blList[0],blList[1],blList[2],blList[3]))#이미지 위치
+#             break
+#         except:
+#             recognition=pg.confirm('인식할 수 없습니다.','인식 오류', buttons=['다시 인식'])
+#             checkNone(recognition)      
+timeX,timeY = pg.locateCenterOnScreen('./img/'+reservationTime+'.png')     
 
 #취소시 다시 하기 버튼 예약어로 만들기
 
-    
+
 while True:
     #서버 시간 받아오기
     date = urllib.request.urlopen("http://hpro.hyundai-steel.com/indexWebkit.jsp?rpage=/spIndex.do").headers['Date']
@@ -85,7 +82,7 @@ while True:
     dateListTime = dateList[4].split(":")#['00','00','00']
     dateTime = int(dateListTime[1])
 
-    print("running..."+str(timeX)+str(timeY))
+    print("running..."+str(timeX) + str(timeY))
 
     if dateTime == myTime :
         print("-------Start--------")
