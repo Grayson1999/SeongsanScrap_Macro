@@ -70,19 +70,22 @@ while True:
 #         except:
 #             recognition=pg.confirm('인식할 수 없습니다.','인식 오류', buttons=['다시 인식'])
 #             checkNone(recognition)      
-timeX,timeY = pg.locateCenterOnScreen('./img/'+reservationTime+'.png')     
-
+while True:
+    try:
+        timeX,timeY = pg.locateCenterOnScreen('./img/'+reservationTime+'.png')
+        break 
+    except:
+        recognition=pg.confirm('인식할 수 없습니다.','인식 오류', buttons=['다시 인식'])
+        checkNone(recognition)
 #취소시 다시 하기 버튼 예약어로 만들기
 
-
+print("running..."+str(timeX) + str(timeY))
 while True:
     #서버 시간 받아오기
     date = urllib.request.urlopen("http://hpro.hyundai-steel.com/indexWebkit.jsp?rpage=/spIndex.do").headers['Date']
     dateList = date.split(" ")
     dateListTime = dateList[4].split(":")#['00','00','00']
     dateTime = int(dateListTime[1])
-
-    print("running..."+str(timeX) + str(timeY))
 
     if dateTime == myTime :
         print("-------Start--------")
