@@ -86,6 +86,7 @@ while True:
     dateList = date.split(" ")
     dateListTime = dateList[4].split(":")#['00','00','00']
     dateTime = int(dateListTime[1])
+    time.sleep(5)
 
     if dateTime == myTime :
         print("-------Start--------")
@@ -94,7 +95,7 @@ while True:
             while True:
                 if pg.locateOnScreen('./img/16.png', region=(blList[0],blList[1],blList[2],blList[3])) != None or pg.locateOnScreen('./img/9.png',region=(blList[0],blList[1],blList[2],blList[3])) != None:
                     break
-            if pg.locateOnScreen("./img/13.png",region=(blList[0],blList[1],blList[2],blList[3])) == None or pg.locateOnScreen("./img/10.png",region=(blList[0],blList[1],blList[2],blList[3])) == None  :
+            if pg.locateOnScreen('./img/13.png',region=(blList[0],blList[1],blList[2],blList[3])) == None or pg.locateOnScreen("./img/10.png",region=(blList[0],blList[1],blList[2],blList[3])) == None  :
                 break
         move_mouse(timeX,timeY)
         pg.press('enter')

@@ -36,7 +36,7 @@ myTime = int(myTime)
 
 #버튼 리스트 생성
 buttonList = []
-for i in range(7,21):
+for i in range(6,17):
     buttonList.append(str(i))
     
 
@@ -92,10 +92,10 @@ while True:
         while True: 
             move_mouse(inqX,inqY)
             while True:
-                if pg.locateOnScreen('./img/19.png', region=(blList[0],blList[1],blList[2],blList[3])) != None or pg.locateOnScreen('./img/9.png',region=(blList[0],blList[1],blList[2],blList[3])) != None:
+                if pg.locateOnScreen('./img/16.png', region=(blList[0],blList[1],blList[2],blList[3])) != None or pg.locateOnScreen('./img/9.png',region=(blList[0],blList[1],blList[2],blList[3])) != None:
                     break
             for i in range(6,17):
-                if pg.locateOnScreen("./img/"+ i +".png",region=(blList[0],blList[1],blList[2],blList[3])) == None:
+                if pg.locateOnScreen("./img/"+ str(i) +".png",region=(blList[0],blList[1],blList[2],blList[3])) == None:
                     check = True
                     break
             if check == True:
